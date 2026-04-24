@@ -3,90 +3,161 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HealthCore Milestone 2 Manual Test Console</title>
+    <title>HealthCore Monday Operations Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-teal-100 text-slate-900">
+  <body class="min-h-screen bg-slate-100 text-slate-900">
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <header class="mb-6 rounded-2xl border border-teal-200 bg-white/85 p-5 shadow-sm backdrop-blur">
+      <header class="mb-6 rounded-2xl border border-teal-100 bg-white p-5 shadow-sm">
         <div class="flex items-center gap-4">
           <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-600 text-lg font-bold text-white">HC</div>
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wider text-teal-700">4Geeks HealthCore</p>
-            <h1 class="text-xl font-bold text-slate-900 sm:text-2xl">Milestone 2 Manual Test Interface</h1>
+            <p class="text-xs font-semibold uppercase tracking-wider text-teal-700">HealthCore Digital</p>
+            <h1 class="text-2xl font-bold">Monday Morning Operations Dashboard</h1>
+            <p class="text-sm text-slate-500">Billing, clinical, and people compliance snapshot</p>
           </div>
         </div>
       </header>
 
-      <main class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <section class="space-y-4">
-          <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-600">Billing - Denial Tracking</h2>
-            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button data-action="calculateDenialRate" class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">calculateDenialRate</button>
-              <button data-action="denialRateByPayer" class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">denialRateByPayer</button>
-              <button data-action="denialRateByLocation" class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">denialRateByLocation</button>
-              <button data-action="flagHighDenialPayers" class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-amber-600">flagHighDenialPayers</button>
-            </div>
-          </article>
+      <main class="space-y-6">
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Billing - Denial Tracking</h2>
+            <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">Tom's Section</span>
+          </div>
 
-          <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-600">Clinical - No-Show Tracking</h2>
-            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button data-action="calculateNoShowCost" class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">calculateNoShowCost</button>
-              <button data-action="noShowRateByLocation" class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">noShowRateByLocation</button>
-              <button data-action="flagHighNoShowLocations" class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-amber-600">flagHighNoShowLocations</button>
+          <div class="mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs uppercase tracking-wide text-slate-500">Overall Denial Rate</p>
+            <div class="mt-1 flex items-end gap-3">
+              <p id="overall-denial-rate" class="text-4xl font-bold">--%</p>
+              <p class="pb-1 text-sm text-slate-500">Target: <= 8%</p>
             </div>
-          </article>
+          </div>
 
-          <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-600">People - CME Compliance</h2>
-            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button data-action="generateCMEReport" class="rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">generateCMEReport</button>
-              <button data-action="getCliniciansAtRisk" class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700">getCliniciansAtRisk</button>
-              <button data-action="getCliniciansWithExpiringLicences" class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-amber-600">getCliniciansWithExpiringLicences</button>
+          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div class="overflow-hidden rounded-xl border border-slate-200">
+              <div class="border-b border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold">Denial Rate by Payer</div>
+              <table class="min-w-full text-sm">
+                <thead class="bg-white text-left text-slate-500">
+                  <tr>
+                    <th class="px-4 py-2 font-medium">Payer</th>
+                    <th class="px-4 py-2 font-medium">Rate</th>
+                  </tr>
+                </thead>
+                <tbody id="payer-denial-table" class="divide-y divide-slate-100"></tbody>
+              </table>
             </div>
-          </article>
 
-          <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-600">Collection & Search Operations</h2>
-            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button data-action="filterClaimsDenied" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">filterClaims (denied only)</button>
-              <button data-action="filterClaimsBlueCross" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">filterClaims (BlueCross only)</button>
-              <button data-action="sortClaimsById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">sortClaimsById (asc)</button>
-              <button data-action="sortAppointmentsByDate" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">sortAppointmentsByDate (desc)</button>
-              <button data-action="groupClaimsBy" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">groupClaimsBy (payerName)</button>
-              <button data-action="findClaimById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">findClaimById (CLM-000003)</button>
-              <button data-action="binarySearchClaimById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">binarySearchClaimById (CLM-000004)</button>
-              <button data-action="findClinicianById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">findClinicianById (CLN-000002)</button>
+            <div class="overflow-hidden rounded-xl border border-slate-200">
+              <div class="border-b border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold">Denial Rate by Location</div>
+              <table class="min-w-full text-sm">
+                <thead class="bg-white text-left text-slate-500">
+                  <tr>
+                    <th class="px-4 py-2 font-medium">Clinic ID</th>
+                    <th class="px-4 py-2 font-medium">Rate</th>
+                  </tr>
+                </thead>
+                <tbody id="location-denial-table" class="divide-y divide-slate-100"></tbody>
+              </table>
             </div>
-          </article>
+          </div>
 
-          <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-600">Validations</h2>
-            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <button data-action="validateClaimValid" class="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">validateClaim (valid sample)</button>
-              <button data-action="validateClaimInvalid" class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700">validateClaim (invalid sample)</button>
-              <button data-action="validateClinicianValid" class="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">validateClinician (valid sample)</button>
-              <button data-action="validateClinicianInvalid" class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700">validateClinician (invalid sample)</button>
-            </div>
-          </article>
-
-          <div class="pt-2">
-            <button id="clear-output" class="w-full rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-black">Clear Output</button>
+          <div class="mt-4 rounded-xl border border-slate-200 bg-white p-3">
+            <p class="mb-2 text-sm font-semibold">Flagged payers above 8% threshold</p>
+            <div id="flagged-payers" class="flex flex-wrap gap-2"></div>
           </div>
         </section>
 
-        <section>
-          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-4 shadow-xl">
-            <div class="mb-3 flex items-center justify-between gap-3">
-              <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">Output Console</h2>
-              <span id="output-title" class="truncate rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-xs text-cyan-200">Ready</span>
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Clinical - No-Show Tracking</h2>
+            <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">Marcus's Section</span>
+          </div>
+
+          <div class="mb-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p class="text-xs uppercase tracking-wide text-slate-500">No-show cost this week - Austin Central</p>
+            <div class="mt-1 flex items-end gap-3">
+              <p id="austin-cost" class="text-4xl font-bold text-slate-900">$0.00</p>
+              <p class="pb-1 text-sm text-slate-500">Week ending 2025-03-14</p>
             </div>
-            <pre id="output-panel" class="h-[72vh] overflow-auto rounded-lg border border-slate-700 bg-slate-950 p-4 text-sm leading-6 text-green-300">{
-  "message": "Select a function to run manual tests"
+          </div>
+
+          <div class="overflow-hidden rounded-xl border border-slate-200">
+            <div class="border-b border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold">No-Show Rate by Location</div>
+            <table class="min-w-full text-sm">
+              <thead class="bg-white text-left text-slate-500">
+                <tr>
+                  <th class="px-4 py-2 font-medium">Clinic ID</th>
+                  <th class="px-4 py-2 font-medium">Rate</th>
+                </tr>
+              </thead>
+              <tbody id="noshow-location-table" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 rounded-xl border border-slate-200 bg-white p-3">
+            <p class="mb-2 text-sm font-semibold">Flagged locations above 20%</p>
+            <div id="flagged-locations" class="flex flex-wrap gap-2"></div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-semibold">People - CME Compliance</h2>
+            <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">Diane's Section</span>
+          </div>
+
+          <div class="overflow-hidden rounded-xl border border-slate-200">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-50 text-left text-slate-500">
+                <tr>
+                  <th class="px-4 py-2 font-medium">Name</th>
+                  <th class="px-4 py-2 font-medium">Role</th>
+                  <th class="px-4 py-2 font-medium">Location</th>
+                  <th class="px-4 py-2 font-medium">Progress</th>
+                  <th class="px-4 py-2 font-medium">Status</th>
+                  <th class="px-4 py-2 font-medium">Days to Licence Expiry</th>
+                </tr>
+              </thead>
+              <tbody id="cme-table" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+
+          <div class="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+            <div class="rounded-xl border border-slate-200 bg-white p-3">
+              <p class="mb-2 text-sm font-semibold">Clinicians at risk</p>
+              <div id="clinicians-at-risk" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-3">
+              <p class="mb-2 text-sm font-semibold">Licences expiring within 90 days</p>
+              <div id="expiring-licences" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <details>
+            <summary class="cursor-pointer text-lg font-semibold">Developer Tools</summary>
+            <p class="mt-2 text-sm text-slate-500">Technical verification for collection and search operations.</p>
+
+            <div class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              <button data-action="filterClaimsDenied" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">filterClaims (denied only)</button>
+              <button data-action="filterClaimsBlueCross" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">filterClaims (BlueCross only)</button>
+              <button data-action="sortClaimsById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">sortClaimsById (asc)</button>
+              <button data-action="sortAppointmentsByDate" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">sortAppointmentsByDate (desc)</button>
+              <button data-action="groupClaimsBy" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">groupClaimsBy (payerName)</button>
+              <button data-action="findClaimById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">findClaimById (CLM-000003)</button>
+              <button data-action="binarySearchClaimById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">binarySearchClaimById (CLM-000004)</button>
+              <button data-action="findClinicianById" class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">findClinicianById (CLN-000002)</button>
+            </div>
+
+            <div class="mt-4 rounded-xl border border-slate-200 bg-slate-900 p-4">
+              <p id="dev-output-title" class="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-300">Ready</p>
+              <pre id="dev-output" class="max-h-80 overflow-auto text-xs leading-5 text-emerald-300">{
+  "message": "Run a developer function to inspect output"
 }</pre>
-          </article>
+            </div>
+          </details>
         </section>
       </main>
     </div>
@@ -547,148 +618,142 @@
         });
       }
 
-      const PATIENT_ID_REGEX = /^HC-[A-Z0-9]{6}$/;
-
-      function validateClaim(claim, knownLocationIds) {
-        const errors = [];
-
-        if (claim.claimAmount <= 0) {
-          errors.push("claimAmount must be greater than 0");
-        }
-
-        const submissionDate = new Date(claim.submissionDate);
-        const today = new Date();
-        if (submissionDate > today) {
-          errors.push("submissionDate must not be a future date");
-        }
-
-        if (!knownLocationIds.includes(claim.locationId)) {
-          errors.push(`locationId '${claim.locationId}' is not a known clinic ID`);
-        }
-
-        if (claim.status === "denied" && !claim.denialReason) {
-          errors.push("denialReason must be present when status is 'denied'");
-        }
-
-        if (!PATIENT_ID_REGEX.test(claim.patientId)) {
-          errors.push("patientId must match format HC-XXXXXX (6 alphanumeric characters)");
-        }
-
-        return { valid: errors.length === 0, errors };
+      function renderBadge(container, text, variant) {
+        const span = document.createElement("span");
+        const base = "rounded-full px-2.5 py-1 text-xs font-semibold";
+        const variants = {
+          red: "bg-red-100 text-red-700",
+          amber: "bg-amber-100 text-amber-700",
+          green: "bg-emerald-100 text-emerald-700",
+          blue: "bg-sky-100 text-sky-700",
+          neutral: "bg-slate-100 text-slate-600",
+        };
+        span.className = `${base} ${variants[variant]}`;
+        span.textContent = text;
+        container.appendChild(span);
       }
 
-      function validateClinician(clinician) {
-        const errors = [];
-        const validRoles = ["physician", "nurse_practitioner", "nurse", "medical_assistant"];
-
-        if (clinician.cmeHoursRequired < 0) {
-          errors.push("cmeHoursRequired must be >= 0");
-        }
-
-        if (clinician.cmeHoursLogged < 0) {
-          errors.push("cmeHoursLogged must be >= 0");
-        }
-
-        const expiryDate = new Date(clinician.licenceExpiryDate);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (expiryDate < today) {
-          errors.push("licenceExpiryDate is in the past — licence expired");
-        }
-
-        if (!validRoles.includes(clinician.role)) {
-          errors.push(`role must be one of: ${validRoles.join(", ")}`);
-        }
-
-        return { valid: errors.length === 0, errors };
+      function formatPercent(value) {
+        return `${value.toFixed(2)}%`;
       }
 
-      function isDenialRateAboveThreshold(rate, threshold = 8) {
-        return rate > threshold;
+      function formatMoney(value) {
+        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
       }
 
-      function isNoShowRateAboveThreshold(rate, threshold = 20) {
-        return rate > threshold;
+      function titleCaseRole(role) {
+        return role.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
       }
 
-      const outputPanel = document.getElementById("output-panel");
-      const outputTitle = document.getElementById("output-title");
+      function renderDashboard() {
+        const overallRate = calculateDenialRate(sampleClaims);
+        const byPayer = denialRateByPayer(sampleClaims);
+        const byLocation = denialRateByLocation(sampleClaims);
+        const flaggedPayers = flagHighDenialPayers(sampleClaims, 8);
 
-      const knownLocationIds = sampleLocations.map(location => location.locationId);
-      const austinLocation = sampleLocations.find(location => location.locationId === "us-tx-001");
-      const asOfDate = "2025-07-01";
-      const weekEndingDate = "2025-03-14";
+        const austin = sampleLocations.find(location => location.locationId === "us-tx-001");
+        const noShowCost = austin ? calculateNoShowCost(sampleAppointments, austin, "2025-03-14") : 0;
+        const noShowByLocation = noShowRateByLocation(sampleAppointments);
+        const flaggedLocations = flagHighNoShowLocations(sampleAppointments, 20);
 
-      const invalidClaim = {
-        claimId: "CLM-999999",
-        patientId: "INVALID",
-        locationId: "us-xx-999",
-        serviceType: "primary_care",
-        payerName: "BlueCross",
-        payerId: "BC001",
-        submissionDate: "2030-01-01",
-        claimAmount: -50,
-        status: "denied",
-        resubmitted: false,
-      };
+        const cmeReport = generateCMEReport(sampleClinicians, "2025-07-01");
+        const cliniciansAtRisk = getCliniciansAtRisk(sampleClinicians, "2025-07-01");
+        const expiringLicences = getCliniciansWithExpiringLicences(sampleClinicians, "2025-07-01", 90);
 
-      const invalidClinician = {
-        clinicianId: "CLN-999999",
-        firstName: "Test",
-        lastName: "User",
-        role: "surgeon",
-        locationId: "us-tx-001",
-        licenceState: "TX",
-        licenceExpiryDate: "2020-01-01",
-        cmeHoursRequired: -5,
-        cmeHoursLogged: -1,
-        cmeYearStartDate: "2025-01-01",
-      };
+        const overallEl = document.getElementById("overall-denial-rate");
+        overallEl.textContent = formatPercent(overallRate);
+        overallEl.className = `text-4xl font-bold ${overallRate > 8 ? "text-red-600" : "text-emerald-600"}`;
 
-      const actions = {
-        calculateDenialRate: {
-          label: "calculateDenialRate(sampleClaims)",
-          run: () => calculateDenialRate(sampleClaims),
-        },
-        denialRateByPayer: {
-          label: "denialRateByPayer(sampleClaims)",
-          run: () => denialRateByPayer(sampleClaims),
-        },
-        denialRateByLocation: {
-          label: "denialRateByLocation(sampleClaims)",
-          run: () => denialRateByLocation(sampleClaims),
-        },
-        flagHighDenialPayers: {
-          label: "flagHighDenialPayers(sampleClaims)",
-          run: () => flagHighDenialPayers(sampleClaims),
-        },
-        calculateNoShowCost: {
-          label: "calculateNoShowCost(sampleAppointments, Austin, 2025-03-14)",
-          run: () => {
-            if (!austinLocation) throw new Error("Austin location not found in sampleLocations");
-            return calculateNoShowCost(sampleAppointments, austinLocation, weekEndingDate);
-          },
-        },
-        noShowRateByLocation: {
-          label: "noShowRateByLocation(sampleAppointments)",
-          run: () => noShowRateByLocation(sampleAppointments),
-        },
-        flagHighNoShowLocations: {
-          label: "flagHighNoShowLocations(sampleAppointments)",
-          run: () => flagHighNoShowLocations(sampleAppointments),
-        },
-        generateCMEReport: {
-          label: "generateCMEReport(sampleClinicians, 2025-07-01)",
-          run: () => generateCMEReport(sampleClinicians, asOfDate),
-        },
-        getCliniciansAtRisk: {
-          label: "getCliniciansAtRisk(sampleClinicians, 2025-07-01)",
-          run: () => getCliniciansAtRisk(sampleClinicians, asOfDate),
-        },
-        getCliniciansWithExpiringLicences: {
-          label: "getCliniciansWithExpiringLicences(sampleClinicians, 2025-07-01, 90)",
-          run: () => getCliniciansWithExpiringLicences(sampleClinicians, asOfDate, 90),
-        },
+        const payerBody = document.getElementById("payer-denial-table");
+        payerBody.innerHTML = "";
+        Object.entries(byPayer).forEach(([payer, rate]) => {
+          const tr = document.createElement("tr");
+          if (rate > 8) tr.className = "bg-red-50";
+          tr.innerHTML = `<td class="px-4 py-2">${payer}</td><td class="px-4 py-2 font-semibold ${rate > 8 ? "text-red-600" : "text-slate-700"}">${formatPercent(rate)}</td>`;
+          payerBody.appendChild(tr);
+        });
+
+        const locationDenialBody = document.getElementById("location-denial-table");
+        locationDenialBody.innerHTML = "";
+        Object.entries(byLocation).forEach(([location, rate]) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td class="px-4 py-2">${location}</td><td class="px-4 py-2 font-semibold">${formatPercent(rate)}</td>`;
+          locationDenialBody.appendChild(tr);
+        });
+
+        const flaggedPayersEl = document.getElementById("flagged-payers");
+        flaggedPayersEl.innerHTML = "";
+        if (flaggedPayers.length === 0) {
+          renderBadge(flaggedPayersEl, "None ✅", "green");
+        } else {
+          flaggedPayers.forEach(name => renderBadge(flaggedPayersEl, name, "red"));
+        }
+
+        document.getElementById("austin-cost").textContent = formatMoney(noShowCost);
+
+        const noShowBody = document.getElementById("noshow-location-table");
+        noShowBody.innerHTML = "";
+        Object.entries(noShowByLocation).forEach(([location, rate]) => {
+          const tr = document.createElement("tr");
+          if (rate > 20) tr.className = "bg-red-50";
+          tr.innerHTML = `<td class="px-4 py-2">${location}</td><td class="px-4 py-2 font-semibold ${rate > 20 ? "text-red-600" : "text-slate-700"}">${formatPercent(rate)}</td>`;
+          noShowBody.appendChild(tr);
+        });
+
+        const flaggedLocationsEl = document.getElementById("flagged-locations");
+        flaggedLocationsEl.innerHTML = "";
+        if (flaggedLocations.length === 0) {
+          renderBadge(flaggedLocationsEl, "None ✅", "green");
+        } else {
+          flaggedLocations.forEach(location => renderBadge(flaggedLocationsEl, location, "red"));
+        }
+
+        const cmeBody = document.getElementById("cme-table");
+        cmeBody.innerHTML = "";
+        cmeReport.forEach(row => {
+          const tr = document.createElement("tr");
+          const statusColor = {
+            on_track: "green",
+            at_risk: "amber",
+            overdue: "red",
+            complete: "blue",
+          };
+          tr.innerHTML = `
+            <td class="px-4 py-2 font-medium">${row.fullName}</td>
+            <td class="px-4 py-2">${titleCaseRole(row.role)}</td>
+            <td class="px-4 py-2">${row.locationId}</td>
+            <td class="px-4 py-2">
+              <div class="w-full max-w-xs rounded-full bg-slate-200">
+                <div class="h-2 rounded-full bg-teal-600" style="width: ${Math.min(100, row.percentComplete)}%"></div>
+              </div>
+              <span class="mt-1 inline-block text-xs text-slate-500">${row.percentComplete}%</span>
+            </td>
+            <td class="px-4 py-2"><span class="status-placeholder"></span></td>
+            <td class="px-4 py-2 font-semibold ${row.licenceDaysRemaining <= 90 ? "text-red-600" : "text-slate-700"}">${row.licenceDaysRemaining}</td>
+          `;
+          cmeBody.appendChild(tr);
+          const placeholder = tr.querySelector(".status-placeholder");
+          renderBadge(placeholder, row.complianceStatus, statusColor[row.complianceStatus]);
+        });
+
+        const atRiskEl = document.getElementById("clinicians-at-risk");
+        atRiskEl.innerHTML = "";
+        if (cliniciansAtRisk.length === 0) {
+          renderBadge(atRiskEl, "None ✅", "green");
+        } else {
+          cliniciansAtRisk.forEach(person => renderBadge(atRiskEl, `${person.firstName} ${person.lastName}`, "amber"));
+        }
+
+        const expiringEl = document.getElementById("expiring-licences");
+        expiringEl.innerHTML = "";
+        if (expiringLicences.length === 0) {
+          renderBadge(expiringEl, "None ✅", "green");
+        } else {
+          expiringLicences.forEach(person => renderBadge(expiringEl, `${person.firstName} ${person.lastName}`, "red"));
+        }
+      }
+
+      const devActions = {
         filterClaimsDenied: {
           label: "filterClaims(sampleClaims, { status: 'denied' })",
           run: () => filterClaims(sampleClaims, { status: "denied" }),
@@ -715,99 +780,34 @@
         },
         binarySearchClaimById: {
           label: "binarySearchClaimById(sortClaimsById(sampleClaims, 'asc'), 'CLM-000004')",
-          run: () => {
-            const sortedClaims = sortClaimsById(sampleClaims, "asc");
-            return binarySearchClaimById(sortedClaims, "CLM-000004");
-          },
+          run: () => binarySearchClaimById(sortClaimsById(sampleClaims, "asc"), "CLM-000004"),
         },
         findClinicianById: {
           label: "findClinicianById(sampleClinicians, 'CLN-000002')",
           run: () => findClinicianById(sampleClinicians, "CLN-000002"),
         },
-        validateClaimValid: {
-          label: "validateClaim(validSampleClaim, knownLocationIds)",
-          run: () => validateClaim(sampleClaims[0], knownLocationIds),
-        },
-        validateClaimInvalid: {
-          label: "validateClaim(invalidClaim, knownLocationIds)",
-          run: () => validateClaim(invalidClaim, knownLocationIds),
-        },
-        validateClinicianValid: {
-          label: "validateClinician(validSampleClinician)",
-          run: () => validateClinician(sampleClinicians[0]),
-        },
-        validateClinicianInvalid: {
-          label: "validateClinician(invalidClinician)",
-          run: () => validateClinician(invalidClinician),
-        },
       };
 
-      function toPrettyJson(value) {
-        if (value === undefined) return "undefined";
-        if (typeof value === "string") return JSON.stringify(value, null, 2);
-        return JSON.stringify(value, null, 2);
-      }
-
-      function showOutput(title, value, isError = false) {
-        outputTitle.textContent = title;
-        outputTitle.className = `truncate rounded-md border px-2 py-1 text-xs ${
-          isError
-            ? "border-rose-500 bg-rose-950 text-rose-200"
-            : "border-slate-600 bg-slate-800 text-cyan-200"
-        }`;
-        outputPanel.textContent = toPrettyJson(value);
+      function renderDevOutput(title, data) {
+        document.getElementById("dev-output-title").textContent = title;
+        document.getElementById("dev-output").textContent = JSON.stringify(data, null, 2);
       }
 
       document.querySelectorAll("button[data-action]").forEach(button => {
         button.addEventListener("click", () => {
           const actionName = button.getAttribute("data-action");
-          const action = actionName ? actions[actionName] : null;
+          const action = actionName ? devActions[actionName] : null;
           if (!action) return;
-
           try {
-            const result = action.run();
-            showOutput(action.label, result);
+            renderDevOutput(action.label, action.run());
           } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
-            showOutput(action.label, { error: message }, true);
+            renderDevOutput(action.label, { error: message });
           }
         });
       });
 
-      document.getElementById("clear-output").addEventListener("click", () => {
-        outputTitle.textContent = "Ready";
-        outputTitle.className = "truncate rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-xs text-cyan-200";
-        outputPanel.textContent = JSON.stringify(
-          { message: "Output cleared. Select another function to run." },
-          null,
-          2
-        );
-      });
-
-      window.HealthCoreTestFunctions = {
-        filterClaims,
-        filterAppointmentsByStatus,
-        sortClaimsById,
-        sortAppointmentsByDate,
-        groupClaimsBy,
-        findClaimById,
-        findClinicianById,
-        binarySearchClaimById,
-        calculateDenialRate,
-        denialRateByPayer,
-        denialRateByLocation,
-        flagHighDenialPayers,
-        calculateNoShowCost,
-        noShowRateByLocation,
-        flagHighNoShowLocations,
-        generateCMEReport,
-        getCliniciansAtRisk,
-        getCliniciansWithExpiringLicences,
-        validateClaim,
-        validateClinician,
-        isDenialRateAboveThreshold,
-        isNoShowRateAboveThreshold,
-      };
+      renderDashboard();
     </script>
   </body>
 </html>
