@@ -37,14 +37,18 @@ ai-engineering-company-project-template/
 ├── README.es.md
 ├── CONTEXT.md                # Placeholder a reemplazar con el contexto asignado
 ├── agents/                   # Patrones/plantillas de agentes y documentación de tools
-├── apps/                     # Aplicaciones del producto (web, APIs, dashboards)
 ├── data/                     # raw, process, pipelines, eval
 ├── docs/                     # Documentación de proyecto y arquitectura
+├── infra/                    # Docker, Terraform, configuraciones de despliegue
+├── internal/                 # CLIs, scripts de migración empaquetados, utilidades internas
+├── mcps/                     # Servidores Model Context Protocol (MCP)
 ├── packages/
 │   └── shared/               # Paquete compartido (@repo/shared-types)
 ├── scripts/                  # Convenciones/documentación de scripts
+├── services/                 # APIs y workers en segundo plano
 ├── shared/                   # Recursos/convenciones compartidas a nivel repo
 ├── skills/                   # Skills reutilizables para agentes
+├── uis/                      # Interfaces de usuario (React, Next.js, Streamlit, HTML)
 └── workflows/                # Documentación de automatizaciones/orquestación
 ```
 
@@ -55,8 +59,8 @@ ai-engineering-company-project-template/
 1. **Usa este repositorio como plantilla** y crea tu propio repo de proyecto.
 2. **Clona** tu repositorio (o ábrelo en Codespaces).
 3. **Reemplaza** `CONTEXT.md` con el contexto completo de tu empresa asignada.
-4. **Revisa** los `README.md` de cada carpeta raíz para entender responsabilidades (`apps/`, `data/`, `skills/`, etc.).
-5. **Empieza a implementar** entregables por hito en `apps/`, reutilizando `packages/shared/` y `data/` según corresponda.
+4. **Revisa** los `README.md` de cada carpeta raíz para entender responsabilidades (`uis/`, `services/`, `data/`, `skills/`, etc.).
+5. **Empieza a implementar** entregables por hito en `uis/` y `services/`, reutilizando `packages/shared/` y `data/` según corresponda.
 
 ---
 
