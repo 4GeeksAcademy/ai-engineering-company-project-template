@@ -32,7 +32,7 @@ Actualmente el repositorio ofrece una **estructura base de carpetas y documentac
 ## Estructura del repositorio
 
 ```text
-ai-engineering-company-project-template/
+ai-engineering-company-project-monorepo/
 ├── README.md
 ├── README.es.md
 ├── CONTEXT.md                # Placeholder a reemplazar con el contexto asignado

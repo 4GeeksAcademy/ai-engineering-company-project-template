@@ -32,7 +32,7 @@ The repository currently provides a **base folder structure and documentation sk
 ## Repository structure
 
 ```text
-ai-engineering-company-project-template/
+ai-engineering-company-project-monorepo/
 ├── README.md
 ├── README.es.md
 ├── CONTEXT.md                # Placeholder to be replaced with assigned context
