@@ -27,3 +27,20 @@ export function mapBy<T, U>(
 ): U[] {
   return arr.map(mapper);
 }
+
+export type SortKey<T> = { key: (item: T) => any; dir?: 'asc' | 'desc' };
+
+export function sortBy<T>(arr: T[], keys: SortKey<T>[]): T[] {
+  const cloned = [...arr];
+  cloned.sort((a, b) => {
+    for (const k of keys) {
+      const va = k.key(a);
+      const vb = k.key(b);
+      if (va === vb) continue;
+      const cmp = va > vb ? 1 : -1;
+      return k.dir === 'desc' ? -cmp : cmp;
+    }
+    return 0;
+  });
+  return cloned;
+}
